@@ -1,0 +1,28 @@
+Expressions:
+	
+	1. (\x.x x) ((\xy.y x) z (\x.x))
+	2. (\xyz.x z) (\z.z) ((\y.y) (\z.z)) x
+
+Normal Order Eval
+
+	1. [(\x.x x) ((\xy.y x) z (\x.x))]
+	-> ([(\xy.y x) z (\x.x)]) ((\xy.y x) z (\x.x))
+	-> [(\x.x) z] ((\xy.y x) z (\x.x))
+	-> z ([(\xy.y x) z (\x.x)])
+	-> z ([(\x.x) z])
+	-> z z
+
+	2. [(\xyz.x z) (\z.z) ((\y.y) (\z.z)) x]
+	-> (\z.z) x
+	-> x
+
+Applicative Order
+	1. (\x.x x) ([(\xy.y x) z (\x.x)])
+	-> (\x.x x) ([(\x.x) z])
+	-> [(\x.x x) (z)]
+	-> z z
+
+	2. (\xyz.x z) (\z.z) ([(\y.y) (\z.z)]) x
+	-> [(\xyz.x z) (\z.z) (\z.z) x]
+	-> (\z.z) x
+	-> x
